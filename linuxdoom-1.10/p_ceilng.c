@@ -28,14 +28,12 @@ rcsid[] = "$Id: p_ceilng.c,v 1.4 1997/02/03 16:47:53 b1 Exp $";
 #include "doomdef.h"
 #include "p_local.h"
 
-#include "s_sound.h"
 
 // State.
 #include "doomstat.h"
 #include "r_state.h"
 
 // Data.
-#include "sounds.h"
 
 //
 // CEILINGS
@@ -72,8 +70,6 @@ void T_MoveCeiling (ceiling_t* ceiling)
 	      case silentCrushAndRaise:
 		break;
 	      default:
-		S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-			     sfx_stnmov);
 		// ?
 		break;
 	    }
@@ -88,8 +84,6 @@ void T_MoveCeiling (ceiling_t* ceiling)
 		break;
 		
 	      case silentCrushAndRaise:
-		S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-			     sfx_pstop);
 	      case fastCrushAndRaise:
 	      case crushAndRaise:
 		ceiling->direction = -1;
@@ -114,9 +108,6 @@ void T_MoveCeiling (ceiling_t* ceiling)
 	    switch(ceiling->type)
 	    {
 	      case silentCrushAndRaise: break;
-	      default:
-		S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-			     sfx_stnmov);
 	    }
 	}
 	
@@ -125,8 +116,6 @@ void T_MoveCeiling (ceiling_t* ceiling)
 	    switch(ceiling->type)
 	    {
 	      case silentCrushAndRaise:
-		S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-			     sfx_pstop);
 	      case crushAndRaise:
 		ceiling->speed = CEILSPEED;
 	      case fastCrushAndRaise:

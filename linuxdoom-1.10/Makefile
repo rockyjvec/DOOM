@@ -4,11 +4,11 @@
 #
 # $Log:$
 #
-CC=  gcc  # gcc or g++
+CC=  /opt/wasi-sdk/bin/clang  # gcc or g++
 
 CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM 
 LDFLAGS=-L/usr/X11R6/lib
-LIBS=-lXext -lX11 -lnsl -lm
+LIBS=-lm
 
 # subdirectory for objects
 O=linux
@@ -19,9 +19,8 @@ OBJS=				\
 		$(O)/doomstat.o		\
 		$(O)/dstrings.o		\
 		$(O)/i_system.o		\
-		$(O)/i_sound.o		\
 		$(O)/i_video.o		\
-		$(O)/i_net.o			\
+		$(O)/i_net.o		\
 		$(O)/tables.o			\
 		$(O)/f_finale.o		\
 		$(O)/f_wipe.o 		\
@@ -72,7 +71,6 @@ OBJS=				\
 		$(O)/st_stuff.o		\
 		$(O)/hu_stuff.o		\
 		$(O)/hu_lib.o			\
-		$(O)/s_sound.o		\
 		$(O)/z_zone.o			\
 		$(O)/info.o				\
 		$(O)/sounds.o

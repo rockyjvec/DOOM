@@ -28,13 +28,10 @@ rcsid[] = "$Id: p_telept.c,v 1.3 1997/01/28 22:08:29 b1 Exp $";
 
 #include "doomdef.h"
 
-#include "s_sound.h"
-
 #include "p_local.h"
 
 
 // Data.
-#include "sounds.h"
 
 // State.
 #include "r_state.h"
@@ -109,13 +106,10 @@ EV_Teleport
 				
 		// spawn teleport fog at source and destination
 		fog = P_SpawnMobj (oldx, oldy, oldz, MT_TFOG);
-		S_StartSound (fog, sfx_telept);
 		an = m->angle >> ANGLETOFINESHIFT;
 		fog = P_SpawnMobj (m->x+20*finecosine[an], m->y+20*finesine[an]
 				   , thing->z, MT_TFOG);
 
-		// emit sound, where?
-		S_StartSound (fog, sfx_telept);
 		
 		// don't move for a bit
 		if (thing->player)

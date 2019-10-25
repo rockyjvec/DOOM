@@ -41,8 +41,6 @@ rcsid[] = "$Id: p_setup.c,v 1.5 1997/02/03 22:45:12 b1 Exp $";
 #include "doomdef.h"
 #include "p_local.h"
 
-#include "s_sound.h"
-
 #include "doomstat.h"
 
 
@@ -603,8 +601,6 @@ P_SetupLevel
     // will be set by player think.
     players[consoleplayer].viewz = 1; 
 
-    // Make sure all sounds are stopped before Z_FreeTags.
-    S_Start ();			
 
     
 #if 0 // UNUSED

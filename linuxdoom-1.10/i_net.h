@@ -28,8 +28,6 @@
 #pragma interface
 #endif
 
-
-
 // Called by D_DoomMain.
 
 

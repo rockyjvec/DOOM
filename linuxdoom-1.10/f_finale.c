@@ -33,11 +33,9 @@ rcsid[] = "$Id: f_finale.c,v 1.5 1997/02/03 21:26:34 b1 Exp $";
 #include "z_zone.h"
 #include "v_video.h"
 #include "w_wad.h"
-#include "s_sound.h"
 
 // Data.
 #include "dstrings.h"
-#include "sounds.h"
 
 #include "doomstat.h"
 #include "r_state.h"
@@ -111,7 +109,6 @@ void F_StartFinale (void)
       case registered:
       case retail:
       {
-	S_ChangeMusic(mus_victor, true);
 	
 	switch (gameepisode)
 	{
@@ -141,7 +138,6 @@ void F_StartFinale (void)
       // DOOM II and missions packs with E1, M34
       case commercial:
       {
-	  S_ChangeMusic(mus_read_m, true);
 
 	  switch (gamemap)
 	  {
@@ -179,7 +175,6 @@ void F_StartFinale (void)
    
       // Indeterminate.
       default:
-	S_ChangeMusic(mus_read_m, true);
 	finaleflat = "F_SKY1"; // Not used anywhere else.
 	finaletext = c1text;  // FIXME - other text, music?
 	break;
@@ -243,8 +238,6 @@ void F_Ticker (void)
 	finalecount = 0;
 	finalestage = 1;
 	wipegamestate = -1;		// force a wipe
-	if (gameepisode == 3)
-	    S_StartMusic (mus_bunny);
     }
 }
 
@@ -385,7 +378,6 @@ void F_StartCast (void)
     castframes = 0;
     castonmelee = 0;
     castattacking = false;
-    S_ChangeMusic(mus_evil, true);
 }
 
 
@@ -407,8 +399,6 @@ void F_CastTicker (void)
 	castdeath = false;
 	if (castorder[castnum].name == NULL)
 	    castnum = 0;
-	if (mobjinfo[castorder[castnum].type].seesound)
-	    S_StartSound (NULL, mobjinfo[castorder[castnum].type].seesound);
 	caststate = &states[mobjinfo[castorder[castnum].type].seestate];
 	castframes = 0;
     }
@@ -421,40 +411,6 @@ void F_CastTicker (void)
 	caststate = &states[st];
 	castframes++;
 	
-	// sound hacks....
-	switch (st)
-	{
-	  case S_PLAY_ATK1:	sfx = sfx_dshtgn; break;
-	  case S_POSS_ATK2:	sfx = sfx_pistol; break;
-	  case S_SPOS_ATK2:	sfx = sfx_shotgn; break;
-	  case S_VILE_ATK2:	sfx = sfx_vilatk; break;
-	  case S_SKEL_FIST2:	sfx = sfx_skeswg; break;
-	  case S_SKEL_FIST4:	sfx = sfx_skepch; break;
-	  case S_SKEL_MISS2:	sfx = sfx_skeatk; break;
-	  case S_FATT_ATK8:
-	  case S_FATT_ATK5:
-	  case S_FATT_ATK2:	sfx = sfx_firsht; break;
-	  case S_CPOS_ATK2:
-	  case S_CPOS_ATK3:
-	  case S_CPOS_ATK4:	sfx = sfx_shotgn; break;
-	  case S_TROO_ATK3:	sfx = sfx_claw; break;
-	  case S_SARG_ATK2:	sfx = sfx_sgtatk; break;
-	  case S_BOSS_ATK2:
-	  case S_BOS2_ATK2:
-	  case S_HEAD_ATK2:	sfx = sfx_firsht; break;
-	  case S_SKULL_ATK2:	sfx = sfx_sklatk; break;
-	  case S_SPID_ATK2:
-	  case S_SPID_ATK3:	sfx = sfx_shotgn; break;
-	  case S_BSPI_ATK2:	sfx = sfx_plasma; break;
-	  case S_CYBER_ATK2:
-	  case S_CYBER_ATK4:
-	  case S_CYBER_ATK6:	sfx = sfx_rlaunc; break;
-	  case S_PAIN_ATK3:	sfx = sfx_sklatk; break;
-	  default: sfx = 0; break;
-	}
-		
-	if (sfx)
-	    S_StartSound (NULL, sfx);
     }
 	
     if (castframes == 12)
@@ -513,8 +469,6 @@ boolean F_CastResponder (event_t* ev)
     casttics = caststate->tics;
     castframes = 0;
     castattacking = false;
-    if (mobjinfo[castorder[castnum].type].deathsound)
-	S_StartSound (NULL, mobjinfo[castorder[castnum].type].deathsound);
 	
     return true;
 }
@@ -685,7 +639,6 @@ void F_BunnyScroll (void)
 	stage = 6;
     if (stage > laststage)
     {
-	S_StartSound (NULL, sfx_pistol);
 	laststage = stage;
     }
 	
