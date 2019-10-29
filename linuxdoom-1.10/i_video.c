@@ -26,6 +26,8 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
+#include <unistd.h>
 //#include <sys/ipc.h>
 //#include <sys/shm.h>
 
@@ -87,7 +89,8 @@ static int	multiply=1;
 
 void I_ShutdownGraphics(void)
 {
-	fclose(f);
+  if(f == NULL)
+    fclose(f);
     // TODO: release memory, cleanup
 }
 
@@ -389,8 +392,11 @@ void I_FinishUpdate (void)
   	Expand4 ((unsigned *)(screens[0]), (double *) (image->data));
     }
 
-rewind(f);
-fwrite(image->data, 1, image->size, f);
+if(f != NULL)
+{
+  rewind(f);
+  fwrite(image->data, 1, image->size, f);
+}
     // draw the image
     /* TODO: draw image */
 /*    XPutImage(	X_display,
@@ -468,17 +474,25 @@ void UploadNewPalette(Colormap cmap, byte *palette)
 //
 void I_SetPalette (byte* palette)
 {
-  FILE *fp = fopen("palette.raw", "w");
-  fwrite(palette, 1, 256*3, fp);
-  fclose(fp);
-  //  UploadNewPalette(X_cmap, palette);
-  //TODO: set palette
+
+  if(access("/home/rocky/palette.raw", W_OK))
+  {
+    FILE *fp = fopen("/home/rocky/palette.raw", "w");
+    if(fp)
+    {
+      fwrite(palette, 1, 256*3, fp);
+      fclose(fp);
+    }
+  }
 }
 
 
 void I_InitGraphics(void)
 {
-f = fopen("screen.data", "w");
+  if(access("/home/rocky/screen.data", W_OK))
+  {
+    f = fopen("/home/rocky/screen.data", "w");
+  }
     char*		d;
     int			n;
     int			pnum;
@@ -534,7 +548,6 @@ f = fopen("screen.data", "w");
 	    I_Error("bad -geom parameter");
     }
 
-    printf("Screen: %dx%d\n", X_width, X_height);
     image->size = X_width * X_height;
     image->data = (char*)malloc(image->size);
     /*image = XCreateImage(	X_display,

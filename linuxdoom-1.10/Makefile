@@ -7,8 +7,7 @@
 CC=  /opt/wasi-sdk/bin/clang  # gcc or g++
 
 CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM 
-LDFLAGS=-L/usr/X11R6/lib
-LIBS=-lm
+LIBS=-lm 
 
 # subdirectory for objects
 O=linux
