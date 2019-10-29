@@ -1,3 +1,8 @@
+#DOOMWASI
+
+This is a port of the original DOOM game to WebAssembly/WASI.  I removed all network/sound/input and render the video output to two raw files: screen.data and palette.raw.  This is mostly just to benchmark my WebAssembly/WASI Interpreter: [GameWasm](https://github.com/rockyjvec/GameWasm)
+
+#Original README
 
 Here it is, at long last.  The DOOM source code is released for your
 non-profit use.  You still need real DOOM data to work with this code.
