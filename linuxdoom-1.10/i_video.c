@@ -112,6 +112,7 @@ boolean		shmFinished;
 
 void I_GetEvent(void)
 {
+	return;
 	static int start = 0;
 	start++;
 if(rand() / (float)RAND_MAX > 0.5 || start < 100)
@@ -475,9 +476,9 @@ void UploadNewPalette(Colormap cmap, byte *palette)
 void I_SetPalette (byte* palette)
 {
 
-  if(access("/home/rocky/palette.raw", W_OK))
+  if(access("./palette.raw", W_OK))
   {
-    FILE *fp = fopen("/home/rocky/palette.raw", "w");
+    FILE *fp = fopen("./palette.raw", "w");
     if(fp)
     {
       fwrite(palette, 1, 256*3, fp);
@@ -489,9 +490,9 @@ void I_SetPalette (byte* palette)
 
 void I_InitGraphics(void)
 {
-  if(access("/home/rocky/screen.data", W_OK))
+  if(access("./screen.data", W_OK))
   {
-    f = fopen("/home/rocky/screen.data", "w");
+    f = fopen("./screen.data", "w");
   }
     char*		d;
     int			n;
